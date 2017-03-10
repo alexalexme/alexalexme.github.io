@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    <body style="margin:40px;">
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1">
+                    <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)">
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <br>
+                    <table class="table" id="table">
+                        <tr class="table-head" id="table-head" style="background-color:#CBC8C8;">
+                            <th onclick="sort(this)">ФИО</th>
+                            <th onclick="sort(this)">телефон</th>    
+                            <th onclick="sort(this)">email</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="get-contact">
+                <div class="col-md-4 col-md-offset-4" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                    <br>
+                    <p><input type="text" class="form-control" id="name" placeholder="ФИО"></p>
+                    <br>
+                    <p><input type="text" class="form-control" id="telephone" placeholder="телефон"></p>
+                    <br>
+                    <p><input type="text" class="form-control" id="email" placeholder="email"></p>
+                    <button class="btn btn-danger" onclick="hideAddForm()">Отмена</button>
+                    <button class="btn btn-success" onclick="addContact()">Добавить</button>                    
+                </div>
+            </div>
+            
+            <div class="complete-add" >
+                <div class="col-md-4 col-md-offset-4" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                    <p>Контакт добавлен</p>
+                    <button class="btn btn-primary" onclick="HideAddFormComplete()">Закрыть</button>
+                </div>
+            </div>
+        </div>    
+        
+    <script type="text/javascript">
+        function showAddForm(){
+            document.getElementById("add-form").style.display="block";
+        }
+        
+        function hideAddForm(){
+            document.getElementById("add-form").style.display="none";
+        }
+        function ShowAddFormComplete(){
+            document.getElementById("add-form-complete").style.display="block";
+        }
+        function HideAddFormComplete(){
+            document.getElementById("add-form-complete").style.display="none";
+        }
+        
+        function addContact(){
+            var get_name=document.getElementById("name").value;
+            var get_telephone=document.getElementById("telephone").value;
+            var get_email=document.getElementById("email").value;
+            
+            
+            var doc=document,
+                elemtbody=doc.getElementsByTagName('tbody')[0],
+                elemTr=doc.createElement("tr"),
+                elemTd1=doc.createElement("td"),
+                elemTd2=doc.createElement("td"),
+                elemTd3=doc.createElement("td"),
+                ArrContent = [get_name,get_telephone,get_email];
+                elemTd1.setAttribute("class", "td-cont");
+                elemTd2.setAttribute("class", "td-cont");
+                elemTd3.setAttribute("class", "td-cont");
+            var ArrTd=[elemTd1,elemTd2,elemTd3];
+                //tableHead=doc.getElementById("table-head");
+            
+            elemtbody.appendChild(elemTr);
+            elemTr.setAttribute('class', 'table-row');//OK
+            var tableRow=doc.getElementsByClassName("table-row");
+            
+            for(i=0;i<ArrTd.length;i++){
+                elemTr.appendChild(ArrTd[i]);
+                ArrTd[i].appendChild(doc.createTextNode(ArrContent[i]));
+            }
+            hideAddForm();
+            ShowAddFormComplete();
+            }
+        
+            function sort(el) {
+               var col_sort = el.innerHTML;
+               var tr = el.parentNode;
+               var table = tr.parentNode;
+               var td, arrow, col_sort_num;
+
+                for (var i=0; (td = tr.getElementsByTagName("th").item(i)); i++) {
+                if (td.innerHTML == col_sort) {
+                        col_sort_num = i;
+                        if (td.prevsort == "y"){
+                            arrow = td.firstChild;
+                            el.up = Number(!el.up);
+                        }else{
+                            td.prevsort = "y";
+                            arrow = td.insertBefore(document.createElement("span"),td.firstChild);
+                            el.up = 0;
+                        }
+                        arrow.innerHTML = el.up?"↑ ":"↓ ";
+                    }else{
+                        if (td.prevsort == "y"){
+                            td.prevsort = "n";
+                            if (td.firstChild) td.removeChild(td.firstChild);
+                        }
+                    }
+                }
+
+                 var a = new Array();
+
+                for(i=1; i < table.rows.length; i++) {
+                    a[i-1] = new Array();
+                    a[i-1][0]=table.rows[i].getElementsByTagName("td").item(col_sort_num).innerHTML;
+                    a[i-1][1]=table.rows[i];
+                    console.log(a);    
+                 }
+                
+                 a.sort();
+                 if(el.up) a.reverse();
+
+                 for(i=0; i < a.length; i++)
+                 table.appendChild(a[i][1]);
+            }
+            
+        
+            function handle(e)
+            {
+                var key=e.keyCode;
+                var 
+                doc=document;
+                if(key==13)
+                    {
+                        //console.log("Enter");
+                        var tbody=doc.getElementById("table");
+                        var filter=doc.getElementById("filter").value;
+                        var elem;
+                        console.log(tbody);
+                        
+                        for(i=0;i<tbody.rows.length;i++)
+                            {
+                                elem=tbody.rows[i].replace(/<[^>]+>/g,"");
+                                var displayStyle='none';
+                            }           
+                    }
+            }        
+        //var log_smb=document.querySelectorAll("td");
+        //console.log(log_smb);
+    </script>
+    </body>
+</html>
