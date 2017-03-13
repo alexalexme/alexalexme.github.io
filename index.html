@@ -74,7 +74,6 @@
                 elemTd2=doc.createElement("td"),
                 elemTd3=doc.createElement("td"),
                 ArrContent = [get_name,get_telephone,get_email];
-                
                 elemTd1.setAttribute("class", "td-cont");
                 elemTd2.setAttribute("class", "td-cont");
                 elemTd3.setAttribute("class", "td-cont");
@@ -82,7 +81,7 @@
                 //tableHead=doc.getElementById("table-head");
             
             elemtbody.appendChild(elemTr);
-            elemTr.setAttribute('class', 'tr-cont');//OK
+            elemTr.setAttribute('class', 'table-row');//OK
             var tableRow=doc.getElementsByClassName("table-row");
             
             for(i=0;i<ArrTd.length;i++){
@@ -134,7 +133,8 @@
                  for(i=0; i < a.length; i++)
                  table.appendChild(a[i][1]);
             }
-              
+            
+        
             function handle(e)
             {
                 var key=e.keyCode;
@@ -142,24 +142,21 @@
                 doc=document;
                 if(key==13)
                     {
+                        //console.log("Enter");
+                        var tbody=doc.getElementById("table");
                         var filter=doc.getElementById("filter").value;
-                        var elems=doc.getElementsByClassName("tr-cont");
-                        console.log("Фильтр = "+filter);
-                        [].forEach.call(elems, function(elem)
-                        {
-                            var tds=elem.childNodes;
-                            console.log(tds);
-                            [].forEach.call(tds, function(td){
-                                var tdresult=td.innerHTML;
-                                console.log(tdresult);
-                                if(tdresult==filter){
-                                    td.parentNode.style.display="none";
-                                }
-                            });
-                        });
+                        var elem;
+                        console.log(tbody);
                         
+                        for(i=0;i<tbody.rows.length;i++)
+                            {
+                                elem=tbody.rows[i].replace(/<[^>]+>/g,"");
+                                var displayStyle='none';
+                            }           
                     }
             }        
+        //var log_smb=document.querySelectorAll("td");
+        //console.log(log_smb);
     </script>
     </body>
 </html>
