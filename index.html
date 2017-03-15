@@ -3,12 +3,20 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Подключение библиотеки jQuery -->
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <!-- Подключение jQuery плагина Masked Input -->
+        <script src="js/jquery.maskedinput.min.js"></script>
     </head>
     <body style="margin:40px;">
         <div class="wrapper">
             <div class="row">
                 <div class="col-md-3 col-md-offset-1">
-                    <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)">
+                    <div class="form-group has-success has-feedback">
+                        <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)" aria-describedby="inputSuccess2Status">
+                        <span class="glyphicon glyphicon-filter form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
@@ -28,11 +36,35 @@
             <div class="get-contact">
                 <div class="col-md-4 col-md-offset-4" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <br>
-                    <p><input type="text" class="form-control" id="name" placeholder="ФИО" name="name"></p>
+                    <p>
+                        <div class="form-group has-success has-feedback">
+                            <input type="text" class="form-control" id="name" placeholder="ФИО" name="name" onfocus="check_name(this)" aria-describedby="inputSuccess2Status">
+                            <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
+                    </p>
                     <br>
-                    <p><input type="text" class="form-control" id="telephone" placeholder="телефон"></p>
+                    <p>
+                        <div class="form-group has-success has-feedback">    
+                            <input type="text" class="form-control" id="phone" placeholder="телефон" aria-describedby="inputSuccess2Status">
+                            <script>
+                                jQuery(function($) {
+                                $.mask.definitions['~']='[+-]';
+                                $('#phone').mask('(999) 999-99-99');
+                            });
+                            </script>
+                            <span class="glyphicon glyphicon-phone-alt form-control-feedback" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
+                    </p>
                     <br>
-                    <p><input type="text" class="form-control" id="email" placeholder="email"></p>
+                    <p>
+                        <div class="form-group has-success has-feedback">    
+                            <input type="text" class="form-control" id="email" placeholder="email" aria-describedby="inputSuccess2Status">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
+                    </p>
                     <button class="btn btn-danger" onclick="hideAddForm()">Отмена</button>
                     <button class="btn btn-success" onclick="addContact()">Добавить</button>                    
                 </div>
@@ -45,8 +77,8 @@
                 </div>
             </div>
         </div>    
-        
     <script type="text/javascript">
+        
         function showAddForm(){
             document.getElementById("add-form").style.display="block";
         }
@@ -60,7 +92,11 @@
         function HideAddFormComplete(){
             document.getElementById("add-form-complete").style.display="none";
         }
-        
+        function check_name(){
+            document.getElementById("name");
+            
+            //setAttribute("aria-describedby","inputSuccess2Status");
+        }
         function replace_name(){
             if(this.value.length==1) {
                 if(/^[^А-ЯЁ]$/.test(this.value)){
@@ -73,9 +109,15 @@
             }   
         document.getElementById("name").onkeyup=replace_name;
         
+//        function check_mask_tel(){
+//            if(this.value.length==1){
+//                
+//            }
+//        }
+//        document.getElementById("").onkeydown=check_mask_tel;
         function addContact(){
             var get_name=document.getElementById("name").value;
-            var get_telephone=document.getElementById("telephone").value;
+            var get_phone=document.getElementById("phone").value;
             var get_email=document.getElementById("email").value;
             //проверка корректности заполнения полей
             
@@ -86,7 +128,7 @@
                 elemTd1=doc.createElement("td"),
                 elemTd2=doc.createElement("td"),
                 elemTd3=doc.createElement("td"),
-                ArrContent = [get_name,get_telephone,get_email];
+                ArrContent = [get_name,get_phone,get_email];
                 
                 elemTd1.setAttribute("class", "td-cont");
                 elemTd2.setAttribute("class", "td-cont");
