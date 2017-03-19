@@ -11,18 +11,18 @@
     <body style="margin:40px;">
         <div class="wrapper">
             <div class="row">
-                <div class="col-md-3 col-xs-8 col-md-offset-1">
+                <div class="col-md-8 col-md-offset-1 col-xs-8 col-sm-8 col-sm-offset-1">
                     <div class="form-group has-success has-feedback">
                         <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)" aria-describedby="inputSuccess2Status">
                         <span class="glyphicon glyphicon-filter form-control-feedback" aria-hidden="true"></span>
                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                     </div>
                 </div>
-                <div class="col-md-3 col-xs-4">
+                <div class="col-md-3 col-sm-3 col-xs-4">
                     <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
                 </div>
                 <br>
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                     <br>
                     <table class="table" id="table">
                         <tr class="table-head" id="table-head" style="background-color:#CBC8C8;">
@@ -35,7 +35,7 @@
             </div>
             
             <div class="get-contact">
-                <div class="col-md-4 col-md-offset-4 col-xs-12" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                <div class="col-md-4 col-md-offset-4 col-sm-12 col-xs-12" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <br>
                     <p>
                         <div class="form-group has-success has-feedback" id="name_div">
@@ -75,7 +75,7 @@
             </div>
             
             <div class="complete-add" >
-                <div class="col-md-4 col-md-offset-4 col-xs-offset-1 col-xs-10" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                <div class="col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-10 col-xs-10" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <p>Контакт добавлен</p>
                     <button class="btn btn-primary" onclick="HideAddFormComplete()">Закрыть</button>
                 </div>
