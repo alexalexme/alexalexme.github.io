@@ -11,16 +11,17 @@
     <body style="margin:40px;">
         <div class="wrapper">
             <div class="row">
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-3 col-xs-8 col-md-offset-1">
                     <div class="form-group has-success has-feedback">
                         <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)" aria-describedby="inputSuccess2Status">
                         <span class="glyphicon glyphicon-filter form-control-feedback" aria-hidden="true"></span>
                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-xs-4">
                     <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
                 </div>
+                <br>
                 <div class="col-md-10 col-md-offset-1">
                     <br>
                     <table class="table" id="table">
@@ -34,7 +35,7 @@
             </div>
             
             <div class="get-contact">
-                <div class="col-md-4 col-md-offset-4" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                <div class="col-md-4 col-md-offset-4 col-xs-12" id="add-form" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <br>
                     <p>
                         <div class="form-group has-success has-feedback" id="name_div">
@@ -74,7 +75,7 @@
             </div>
             
             <div class="complete-add" >
-                <div class="col-md-4 col-md-offset-4" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                <div class="col-md-4 col-md-offset-4 col-xs-offset-1 col-xs-10" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <p>Контакт добавлен</p>
                     <button class="btn btn-primary" onclick="HideAddFormComplete()">Закрыть</button>
                 </div>
@@ -143,29 +144,39 @@
                 var count_err=0;
                 
                 var class_name = document.getElementById("name_div");
-                    if(class_name=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_name.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
                         {
                             count_err++;
                             console.log(count_err);
                         }
                 var class_phone = document.getElementById("phone_div");
-                    if(class_name=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_phone.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
                         {
                             count_err++;
                             console.log(count_err);
                         }
                 var class_email = document.getElementById("email_div");
-                    if(class_name=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_email.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
                         {
                             count_err++;
                             console.log(count_err);
                         }
                 console.log(count_err);
-                
-                ArrTd[i].appendChild(doc.createTextNode(ArrContent[i]));
+                if(count_err!=0){
+                    
+                }
+                else {   
+                    ArrTd[i].appendChild(doc.createTextNode(ArrContent[i]));
+                }
             }
-            hideAddForm();
-            ShowAddFormComplete();
+            if(count_err=0)
+            {
+                alert("Некорректно заполнена форма!"); 
+                hideAddForm();
+                ShowAddFormComplete();
+            }
+            else{hideAddForm();}
+            
         }
         
         //JQuery функция для обозначения ошибок полeq name, phone, email
@@ -282,7 +293,11 @@
                             [].forEach.call(tds, function(td){
                                 var tdresult=td.innerHTML;
                                 console.log(tdresult);
+                                //НЕ РАБОТАЕТ ПОПРАВИТЬ МЕХАНИЗМ ПРИСВОЕНИЯ СВОЙСТВА ДИСПЛЭЙ для тд
                                 if(tdresult==filter){
+                                    td.parentNode.style.display="block";
+                                }
+                                else{
                                     td.parentNode.style.display="none";
                                 }
                             });
