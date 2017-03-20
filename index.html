@@ -11,7 +11,7 @@
     <body style="margin:40px;">
         <div class="wrapper">
             <div class="row">
-                <div class="col-md-8 col-md-offset-1 col-xs-8 col-sm-8 col-sm-offset-1">
+                <div class="col-md-8 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-8">
                     <div class="form-group has-success has-feedback">
                         <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)" aria-describedby="inputSuccess2Status">
                         <span class="glyphicon glyphicon-filter form-control-feedback" aria-hidden="true"></span>
@@ -22,7 +22,7 @@
                     <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
                 </div>
                 <br>
-                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                     <br>
                     <table class="table" id="table">
                         <tr class="table-head" id="table-head" style="background-color:#CBC8C8;">
@@ -39,7 +39,7 @@
                     <br>
                     <p>
                         <div class="form-group has-success has-feedback" id="name_div">
-                            <input type="text" class="form-control" id="name" placeholder="ФИО" name="name" onfocus="check_name(this)" aria-describedby="inputSuccess2Status">
+                            <input type="text" class="form-control" id="name" placeholder="ФИО" name="name" aria-describedby="inputSuccess2Status">
                             <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>
                             <span id="inputSuccess2Status" class="sr-only">(success)</span>
                         </div>
@@ -75,7 +75,7 @@
             </div>
             
             <div class="complete-add" >
-                <div class="col-md-4 col-md-offset-4 col-xs-offset-1 col-sm-10 col-xs-10" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
+                <div class="col-md-4 col-md-offset-4 col-sm-10 col-xs-10 col-xs-offset-1" id="add-form-complete" align="center" style="border:1px solid black; border-color:grey; border-radius:10px; padding:20px; display:none;">
                     <p>Контакт добавлен</p>
                     <button class="btn btn-primary" onclick="HideAddFormComplete()">Закрыть</button>
                 </div>
@@ -86,7 +86,6 @@
         function showAddForm(){
             document.getElementById("add-form").style.display="block";
         }
-        
         function hideAddForm(){
             document.getElementById("add-form").style.display="none";
         }
@@ -96,12 +95,6 @@
         function HideAddFormComplete(){
             document.getElementById("add-form-complete").style.display="none";
         }
-        function check_name(){
-            document.getElementById("name");
-            
-            //setAttribute("aria-describedby","inputSuccess2Status");
-        }
-        
         // Фунцкия замены некооректных символов для поля имени name
         function replace_name(){ 
             if(this.value.length==1) {
@@ -114,13 +107,10 @@
                 }
             }   
         document.getElementById("name").onkeyup=replace_name;
-        
        
         //Функция добавления контакта
         function addContact(){
-        //Проверка заполнения полей    
-            
-        //Процедура добавления записи в таблицу    
+            //Процедура добавления записи в таблицу    
             var doc=document,
                 get_name=doc.getElementById("name").value,
                 get_phone=doc.getElementById("phone").value,
@@ -138,52 +128,45 @@
                 elemtbody.appendChild(elemTr);
                 elemTr.setAttribute('class', 'tr-cont');
             var tableRow=doc.getElementsByClassName("table-row");
-            
             for(i=0;i<ArrTd.length;i++){
-                elemTr.appendChild(ArrTd[i]);
                 var count_err=0;
-                
                 var class_name = document.getElementById("name_div");
-                    if(class_name.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_name.className=="form-group has-error has-feedback"||class_name.className=="has-error form-group has-feedback")
                         {
                             count_err++;
-                            console.log(count_err);
                         }
                 var class_phone = document.getElementById("phone_div");
-                    if(class_phone.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_phone.className=="form-group has-error has-feedback"||class_name.className=="has-error form-group has-feedback")
                         {
                             count_err++;
-                            console.log(count_err);
                         }
                 var class_email = document.getElementById("email_div");
-                    if(class_email.className=="form-group has-error has-feedback"||class_name=="has-error form-group has-feedback")
+                    if(class_email.className=="form-group has-error has-feedback"||class_name.className=="has-error form-group has-feedback")
                         {
                             count_err++;
-                            console.log(count_err);
                         }
                 console.log(count_err);
-                if(count_err!=0){
-                    
-                }
-                else {   
+                if(count_err==0){
+                    elemTr.appendChild(ArrTd[i]);
                     ArrTd[i].appendChild(doc.createTextNode(ArrContent[i]));
                 }
             }
-            if(count_err=0)
+            console.log(count_err);
+            if(count_err!=0)
             {
                 alert("Некорректно заполнена форма!"); 
                 hideAddForm();
-                ShowAddFormComplete();
             }
-            else{hideAddForm();}
-            
+            else{
+                ShowAddFormComplete();
+                hideAddForm();
+            }   
         }
-        
         //JQuery функция для обозначения ошибок полeq name, phone, email
         $(document).ready(function() {
             $("#name").blur(function(){
-                var phone = $("#name").val();
-                if(phone==0) {
+                var name = $("#name").val();
+                if(name==0) {
                     $("#name_div").removeClass("form-group has-success has-feedback");
                     $("#name_div").addClass("form-group has-error has-feedback");        
                 }
@@ -218,13 +201,13 @@
                     }
                 } 
                 });
-                $("#email").blur(function(){
-                    var email = $("#email").val();
-                    if(email ==0) {
-                        $("#email_div").removeClass("form-group has-success has-feedback");
-                        $("#email_div").addClass("form-group has-error has-feedback");                 
-                    }
+            $("#email").blur(function(){
+                var email = $("#email").val();
+                if(email ==0) {
+                    $("#email_div").removeClass("form-group has-success has-feedback");
+                    $("#email_div").addClass("form-group has-error has-feedback");                 
                 }
+            }
             );
         });
          //Функция проверки email регулярным выражением RegExp('example@mail.ru')
@@ -289,10 +272,10 @@
                         [].forEach.call(elems, function(elem)
                         {
                             var tds=elem.childNodes;
-                            console.log(tds);
+                            console.log("tds = "+tds);
                             [].forEach.call(tds, function(td){
                                 var tdresult=td.innerHTML;
-                                console.log(tdresult);
+                                console.log("tdresult = "+tdresult);
                                 //НЕ РАБОТАЕТ ПОПРАВИТЬ МЕХАНИЗМ ПРИСВОЕНИЯ СВОЙСТВА ДИСПЛЭЙ для тд
                                 if(tdresult==filter){
                                     td.parentNode.style.display="block";
