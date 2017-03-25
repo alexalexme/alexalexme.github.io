@@ -11,14 +11,22 @@
     <body style="margin:40px;">
         <div class="wrapper">
             <div class="row">
-                <div class="col-md-8 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-8">
+                <div class="col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-xs-7">
                     <div class="form-group has-success has-feedback">
-                        <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="handle(event)" aria-describedby="inputSuccess2Status">
+                        <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" id="checker" aria-label="...">
+                        </span>
+                        <input type="text" class="form-control" id="filter" placeholder="фильтр" onkeypress="addFilter(event)" aria-describedby="inputSuccess2Status">
                         <span class="glyphicon glyphicon-filter form-control-feedback" aria-hidden="true"></span>
                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                           
+                        </div>
+                        
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-4">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <button type="button" class="btn btn-primary" id="deleter" onclick="deleteFilter()">Снять</button>
                     <button type="button" class="btn btn-primary" onclick="showAddForm()">Добавить</button>
                 </div>
                 <br>
@@ -260,35 +268,34 @@
             }
         
         //Функиця для работы фильтра
-        function handle(e){
-                var key=e.keyCode;
-                var 
-                doc=document;
+        function addFilter(e){
+            //checkbox
+            var key=e.keyCode;
+            var doc=document;
+            var filter=doc.getElementById("filter").value;
+            var elems=doc.getElementsByClassName("tr-cont");
+            if(document.getElementById("checker").checked)
+            {       
                 if(key==13)
                     {
-                        var filter=doc.getElementById("filter").value;
-                        var elems=doc.getElementsByClassName("tr-cont");
                         console.log("Фильтр = "+filter);
-                        [].forEach.call(elems, function(elem)
-                        {
-                            var tds=elem.childNodes;
-                            console.log("tds = "+tds);
-                            [].forEach.call(tds, function(td){
-                                var tdresult=td.innerHTML;
-                                console.log("tdresult = "+tdresult);
-                                //НЕ РАБОТАЕТ ПОПРАВИТЬ МЕХАНИЗМ ПРИСВОЕНИЯ СВОЙСТВА ДИСПЛЭЙ для тд
-                                if(tdresult==filter){
-                                    td.parentNode.style.display="block";
-                                }
-                                else{
-                                    td.parentNode.style.display="none";
-                                }
-                            });
-                        });
-                        
-                    }
+                        var tableTr=document.getElementsByClassName("tr-cont");
+                        for(i=0;tableTr.length>i;i++){
+                            if(!tableTr.item(i).innerHTML.match(filter)){
+                                console.log(tableTr.item(i));
+                                tableTr.item(i).style.display="none";
+                            }
+                        }
+                    }                
+                }   
             }
-            
+        function deleteFilter(){
+            var tableTr=document.getElementsByClassName("tr-cont");
+            for(i=0;tableTr.length>i;i++){
+                console.log(tableTr.item(i));
+                tableTr.item(i).style.display="table-row";
+            }   
+        }
     </script>
     </body>
 </html>
